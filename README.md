@@ -342,7 +342,7 @@ This project is open source and available under the MIT License.
 
 ## 👤 Author
 
-Created as a demonstration of Django web development best practices.
+Created by Lareb Hasan as a demonstration of Django web development.
 
 ---
 
