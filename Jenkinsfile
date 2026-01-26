@@ -2,11 +2,25 @@ pipeline {
     agent any
 
     stages {
-        stage('Build Docker Image') {
+        stage('Build services') {
             steps {
-                echo 'Building Docker image for Django app'
-                sh 'docker build -t django-tasklist-ci .'
-            }   
+                echo 'Building services using docker compose'
+                sh 'docker compose build'
+            }
+        }
+
+        stage('Run Django container') {
+            steps {
+                echo 'Starting Django container'
+                sh 'docker compose up -d'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Stopping and removing containers'
+            sh 'docker compose down'
         }
     }
 }
