@@ -2,10 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Build Docker Image') {
             steps {
-                echo 'Checking out code from GitHub'
-            }
+                echo 'Building Docker image for Django app'
+                sh 'docker build -t django-tasklist-ci .'
+            }   
         }
     }
 }
