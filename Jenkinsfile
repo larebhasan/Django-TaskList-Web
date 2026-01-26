@@ -8,9 +8,9 @@ pipeline {
             }
         }
 
-        stage('Run Django container') {
+        stage('Run Django tests') {
             steps {
-                sh 'docker compose up -d'
+                sh 'docker compose run --rm web python manage.py test'
             }
         }
     }
