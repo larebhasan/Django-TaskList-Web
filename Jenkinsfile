@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        PATH = "/usr/libexec/docker/cli-plugins:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    }
+
     stages {
         stage('Build services') {
             steps {
