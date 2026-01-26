@@ -5,14 +5,14 @@ pipeline {
         stage('Build services') {
             steps {
                 echo 'Building services using docker compose'
-                sh 'docker compose build'
+                sh 'docker-compose build'
             }
         }
 
         stage('Run Django container') {
             steps {
                 echo 'Starting Django container'
-                sh 'docker compose up -d'
+                sh 'docker-compose up -d'
             }
         }
     }
@@ -20,7 +20,7 @@ pipeline {
     post {
         always {
             echo 'Stopping and removing containers'
-            sh 'docker compose down'
+            sh 'docker-compose down'
         }
     }
 }
