@@ -1,27 +1,15 @@
-services:
-  web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    depends_on:
-      - mysql
-    environment:
-      DJANGO_SETTINGS_MODULE: task_project.settings
-      DB_NAME: tasklist_db
-      DB_USER: tasklist_user
-      DB_PASSWORD: tasklist_pass
-      DB_HOST: mysql
-      DB_PORT: 3306
-
-  mysql:
-    image: mysql:8.0
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: tasklist_db
-      MYSQL_USER: tasklist_user
-      MYSQL_PASSWORD: tasklist_pass
-    volumes:
-      - mysql_data:/var/lib/mysql
-
-volumes:
-  mysql_data:
+mysql:
+  image: mysql:8.0
+  restart: unless-stopped
+  environment:
+    MYSQL_ROOT_PASSWORD: rootpass
+    MYSQL_DATABASE: tasklist_db
+    MYSQL_USER: tasklist_user
+    MYSQL_PASSWORD: tasklist_pass
+  healthcheck:
+    test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+    interval: 5s
+    timeout: 5s
+    retries: 10
+  volumes:
+    - mysql_data:/var/lib/mysql

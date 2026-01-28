@@ -14,11 +14,24 @@ pipeline {
             }
         }
 
-        stage('Run migrations') {
-            steps {
-                sh 'docker compose exec -T web python manage.py migrate'
-            }
-        }
+       stage('Wait for MySQL') {
+    steps {
+        sh '''
+        echo "Waiting for MySQL to be ready..."
+        for i in {1..20}; do
+          docker compose exec -T mysql mysqladmin ping -h localhost && break
+          sleep 3
+        done
+        '''
+    }
+}
+
+    stage('Run migrations') {
+    steps {
+        sh 'docker compose exec -T web python manage.py migrate'
+    }
+}
+
 
         stage('Run Django tests') {
             steps {
