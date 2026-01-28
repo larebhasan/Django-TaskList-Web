@@ -1,20 +1,20 @@
 services:
   web:
     build: .
-    command: tail -f /dev/null
-    volumes:
-      - .:/app
+    command: python manage.py runserver 0.0.0.0:8000
     depends_on:
       - mysql
+    environment:
+      DJANGO_SETTINGS_MODULE: task_project.settings
 
   mysql:
     image: mysql:8.0
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: django_db
-      MYSQL_USER: django_user
-      MYSQL_PASSWORD: django_password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
 
